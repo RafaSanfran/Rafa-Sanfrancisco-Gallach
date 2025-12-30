@@ -1,5 +1,21 @@
-export type Sector = 'Fabricación' | 'Distribución' | 'Servicios' | 'Construcción' | 'Retail' | 'Alimentación' | 'Otros';
-export type CompanySize = '1-10' | '11-50' | '51-200' | '201-500' | '500+';
+
+export type Sector = 
+  | 'Fabricación' 
+  | 'Distribución' 
+  | 'Servicios' 
+  | 'Alimentación' 
+  | 'Metal / Siderurgia' 
+  | 'Químico / Farmacéutico' 
+  | 'Textil' 
+  | 'Madera / Mueble' 
+  | 'Construcción' 
+  | 'Logística / Transporte' 
+  | 'Consultoría / Profesional' 
+  | 'Retail' 
+  | 'Sector Público' 
+  | 'Otros';
+
+export type CompanySize = '1-5' | '6-10' | '11-20' | '21-40' | '41-60' | '61-100' | '100+';
 
 export interface BudgetBreakdown {
   concept: string;
@@ -23,7 +39,8 @@ export interface FormData {
   size: CompanySize;
   digitalMaturity: number;
   currentSoftware: string;
-  currentUsers: number;
+  currentAppsUsers: string;
+  digitizationContext: string;
   mainPainPoints: string;
   products: {
     erp: boolean;
@@ -34,27 +51,51 @@ export interface FormData {
     portal: boolean;
     ai: boolean;
     flexygoCustom: boolean;
+    sat: boolean;
+    docDigitization: boolean;
   };
   details: {
     erp?: { 
       multiCompany: boolean; manufacturing: boolean; financial: boolean; purchase: boolean; sales: boolean;
-      stockManagement: boolean; traceability: boolean; serialNumbers: boolean; expirationDates: boolean;
-      customsPurchases: boolean; accounting: boolean; taxModels: boolean; verifactuSII: boolean;
+      stockManagement: boolean; traceability: boolean; accounting: boolean; verifactuSII: boolean;
+      taxModels: boolean; costAnalysis: boolean; projectManagement: boolean;
     };
     crm?: { 
-      commercialManagement: boolean; massMailing: boolean; opportunitiesQuotes: boolean; crmUsers: number;
-      emailIntegration: boolean; collectionsManagement: boolean; orderDeliveryGeneration: boolean;
-      stockVisibility: boolean; salesVsBudgetComparison: boolean; mobile: boolean;
+      opportunities: boolean; marketing: boolean; service: boolean; mobile: boolean; 
+      outlookIntegration: boolean; leadScoring: boolean; salesPipeline: boolean;
     };
-    gmao?: { preventive: boolean; corrective: boolean; externalAgents: boolean; assetsCount: string; };
-    sga?: { warehouseCount: number; locationsCount: number; picking: boolean; packing: boolean; rfid: boolean; waves: boolean; };
-    hr?: { payroll: boolean; portal: boolean; training: boolean; recruiting: boolean; };
-    portal?: { clients: boolean; suppliers: boolean; ecommerce: boolean; };
-    ai?: { forecasting: boolean; automation: boolean; chat: boolean; dataAnalysis: boolean; };
+    gmao?: { 
+      preventive: boolean; corrective: boolean; assetsCount: string; 
+      spareParts: boolean; mobileApp: boolean; contractorPortal: boolean;
+    };
+    sga?: { 
+      warehouseCount: number; locationsCount: number; picking: boolean; packing: boolean; 
+      rfid: boolean; waves: boolean; crossDocking: boolean; shippingIntegration: boolean;
+    };
+    sat?: { 
+      techniciansCount: number; scheduler: boolean; mobileApp: boolean; 
+      digitalSignature: boolean; routes: boolean; contractManagement: boolean;
+    };
+    docDigitization?: { 
+      ocr: boolean; workflow: boolean; cloudStorage: boolean; 
+      erpIntegration: boolean; digitalCert: boolean; expenseNotes: boolean;
+    };
+    hr?: { 
+      payroll: boolean; portal: boolean; recruiting: boolean; 
+      timeTracking: boolean; performance: boolean; training: boolean;
+    };
+    portal?: { 
+      clients: boolean; suppliers: boolean; ecommerce: boolean; 
+      ticketing: boolean; orderTracking: boolean;
+    };
+    ai?: { 
+      forecasting: boolean; automation: boolean; chat: boolean; 
+      sentimentAnalysis: boolean; documentExtraction: boolean;
+    };
     flexygoCustom?: { description: string; };
   };
   expectations: string;
-  budgetRange: string;
+  customerCharacter: string;
   priority: 'Alta' | 'Media' | 'Baja';
   calculatedBudget?: BudgetResults;
 }
@@ -65,10 +106,11 @@ export const INITIAL_DATA: FormData = {
   contactName: '',
   email: '',
   sector: 'Fabricación',
-  size: '1-10',
+  size: '1-5',
   digitalMaturity: 5,
   currentSoftware: '',
-  currentUsers: 0,
+  currentAppsUsers: '',
+  digitizationContext: '',
   mainPainPoints: '',
   products: {
     erp: false,
@@ -79,9 +121,11 @@ export const INITIAL_DATA: FormData = {
     portal: false,
     ai: false,
     flexygoCustom: false,
+    sat: false,
+    docDigitization: false,
   },
   details: {},
   expectations: '',
-  budgetRange: '',
+  customerCharacter: '',
   priority: 'Media'
 };

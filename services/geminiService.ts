@@ -1,3 +1,4 @@
+
 import { GoogleGenAI } from "@google/genai";
 import { FormData } from "../types";
 
@@ -11,38 +12,43 @@ export const generateProposalSummary = async (formData: FormData) => {
   ` : '';
 
   const prompt = `
-    Como consultor senior de AHORA (empresa de software ERP/CRM), analiza la siguiente toma de requerimientos y la estimación económica generada.
+    Eres un Consultor Estratégico Senior de AHORA (empresa líder en software de gestión). 
+    Tu objetivo es analizar una toma de requerimientos y generar un informe persuasivo y profesional.
     
-    DATOS DEL CLIENTE:
-    Empresa: ${formData.companyName}
-    CIF: ${formData.cif}
-    Email: ${formData.email}
-    Sector: ${formData.sector}
-    Tamaño: ${formData.size} empleados
-    Usuarios actuales: ${formData.currentUsers}
-    Nivel Digital: ${formData.digitalMaturity}/10
-    Software actual: ${formData.currentSoftware}
-    Problemas principales: ${formData.mainPainPoints}
+    PERFIL DEL CLIENTE:
+    - Empresa: ${formData.companyName}
+    - Sector: ${formData.sector}
+    - Tamaño: ${formData.size} empleados
+    - Perfil del Interlocutor: ${formData.customerCharacter}
     
-    PRODUCTOS INTERESADOS:
+    SITUACIÓN ACTUAL Y PAIN POINTS:
+    - Software: ${formData.currentSoftware}
+    - Usuarios: ${formData.currentAppsUsers}
+    - Problemas Críticos: ${formData.mainPainPoints}
+    - Madurez Digital: ${formData.digitalMaturity}/10
+    
+    ALCANCE TÉCNICO PROPUESTO (Suite AHORA 5):
     ${Object.entries(formData.products)
       .filter(([_, value]) => value)
       .map(([key, _]) => `- ${key.toUpperCase()}`)
       .join('\n')}
       
-    DETALLES DE ALCANCE:
+    DETALLES DE FUNCIONALIDADES SELECCIONADAS:
     ${JSON.stringify(formData.details, null, 2)}
     
     ${budgetInfo}
     
-    EXPECTATIVAS: ${formData.expectations}
+    OBJETIVOS DEL CLIENTE: ${formData.expectations}
     
-    Genera un informe que incluya:
-    1. Resumen Ejecutivo centrado en el ROI.
-    2. Diagnóstico de necesidades críticas y cómo justifican la inversión propuesta.
-    3. Validación del presupuesto: ¿Es coherente con el alcance? ¿Qué partidas son críticas?
-    4. Siguientes pasos recomendados para cerrar la venta.
-    5. Valor diferencial de AHORA frente a la competencia en este escenario de precios y servicios.
+    REGLAS DEL INFORME:
+    1. Usa un tono que encaje con el carácter "${formData.customerCharacter}".
+    2. RESUMEN EJECUTIVO: Centrado en ROI y resolución de los pain points indicados.
+    3. DIAGNÓSTICO: Analiza por qué su sistema actual (${formData.currentSoftware}) le está haciendo perder dinero/eficiencia.
+    4. ARQUITECTURA: Explica cómo los módulos seleccionados (ERP, SGA, etc.) solucionan sus problemas específicos.
+    5. VALOR DIFERENCIAL AHORA: Menciona obligatoriamente el "Mantenimiento Perpetuo", ser "Fabricantes" y el bajo "TCO".
+    6. ESTRATEGIA: Da consejos al comercial para cerrar la venta basándose en el perfil del cliente.
+    
+    Escribe el informe en Español de España, de forma estructurada y con viñetas.
   `;
 
   try {
@@ -50,13 +56,13 @@ export const generateProposalSummary = async (formData: FormData) => {
       model: "gemini-3-pro-preview",
       contents: prompt,
       config: {
-        thinkingConfig: { thinkingBudget: 2000 }
+        thinkingConfig: { thinkingBudget: 4000 }
       }
     });
 
     return response.text;
   } catch (error) {
     console.error("Error generating summary:", error);
-    return "No se pudo generar el resumen automáticamente. Por favor, revisa la conexión.";
+    return "No se pudo generar el resumen automáticamente en este momento.";
   }
 };

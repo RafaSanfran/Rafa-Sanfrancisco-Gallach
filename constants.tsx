@@ -2,7 +2,8 @@ import React from 'react';
 import { 
   Building2, Users, Rocket, Target, Settings, Package, 
   UserCircle, Globe, BrainCircuit, BarChart3, ChevronRight,
-  ClipboardList, Search, MessageSquare, Briefcase, PlusCircle
+  ClipboardList, Search, MessageSquare, Briefcase, PlusCircle,
+  Wrench, FileSearch
 } from 'lucide-react';
 
 export const PRODUCT_ICONS = {
@@ -11,6 +12,8 @@ export const PRODUCT_ICONS = {
   gmao: <Rocket className="w-5 h-5" />,
   hr: <UserCircle className="w-5 h-5" />,
   sga: <Package className="w-5 h-5" />,
+  sat: <Wrench className="w-5 h-5" />,
+  docDigitization: <FileSearch className="w-5 h-5" />,
   portal: <Globe className="w-5 h-5" />,
   ai: <BrainCircuit className="w-5 h-5" />,
   flexygoCustom: <PlusCircle className="w-5 h-5" />
@@ -22,6 +25,8 @@ export const PRODUCT_NAMES = {
   gmao: 'GMAO (Mantenimiento)',
   hr: 'HR (Recursos Humanos)',
   sga: 'SGA (Logística)',
+  sat: 'SAT (Servicio Asistencia)',
+  docDigitization: 'Digitalización Documental',
   portal: 'Portal de Cliente/Proveedor',
   ai: 'Soluciones con IA',
   flexygoCustom: 'Proyecto Personalizado Flexygo'
